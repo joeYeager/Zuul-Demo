@@ -5,17 +5,28 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import javax.servlet.http.HttpServletResponse;
+
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.POST_TYPE;
 
-@Ignore
 public class PostRequestFilterTest {
 
     private PostRequestFilter target;
 
+    private RequestContext requestContext;
+    private HttpServletResponse response;
+
     @Before
     public void setUp() throws Exception {
+        requestContext = mock(RequestContext.class);
+        response = mock(HttpServletResponse.class);
+        when(requestContext.getResponse()).thenReturn(response);
         target = new PostRequestFilter();
     }
 
@@ -35,12 +46,9 @@ public class PostRequestFilterTest {
     }
 
     @Test
-    public void testRun() throws Exception {
-        RequestContext requestContext = mock(RequestContext.class);
+    public void whenRunIsCalledItShouldAddTheRequestIdHeaderToTheResponse() throws Exception {
         RequestContext.testSetCurrentContext(requestContext);
-
         target.run();
-
-        assertEquals(false, true);
+        verify(response).setHeader(eq("X-Request-Id"), anyString());
     }
 }
