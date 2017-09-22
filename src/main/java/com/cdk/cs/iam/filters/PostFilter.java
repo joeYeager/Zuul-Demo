@@ -1,15 +1,17 @@
-package com.cdk.cs.iam.filters.request;
+package com.cdk.cs.iam.filters;
 
 import com.netflix.zuul.ZuulFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.ROUTE_TYPE;
+import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.POST_TYPE;
 
 @Service
-public class RouteFilter extends ZuulFilter {
+@Slf4j
+public class PostFilter extends ZuulFilter {
     @Override
     public String filterType() {
-        return ROUTE_TYPE;
+        return POST_TYPE;
     }
 
     @Override

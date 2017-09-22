@@ -1,5 +1,7 @@
-package com.cdk.cs.iam.filters.pre;
+package com.cdk.cs.iam.filters;
 
+import com.cdk.cs.iam.filters.PreFilter;
+import com.cdk.cs.iam.service.RequestSwatterService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +13,7 @@ public class PreFilterTest {
 
     @Before
     public void setUp() throws Exception {
-        target = new PreFilter();
+        target = new PreFilter(new RequestSwatterService());
     }
 
     @Test
@@ -33,5 +35,4 @@ public class PreFilterTest {
     public void testRun() throws Exception {
         assertEquals(false, true);
     }
-
 }

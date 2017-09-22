@@ -1,17 +1,18 @@
-package com.cdk.cs.iam.filters.post;
+package com.cdk.cs.iam.filters;
 
+import com.cdk.cs.iam.filters.RouteFilter;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PostFilterTest {
+public class RouteFilterTest {
 
-    private PostFilter target;
+    private RouteFilter target;
 
     @Before
     public void setUp() throws Exception {
-        target = new PostFilter();
+        target = new RouteFilter();
     }
 
     @Test

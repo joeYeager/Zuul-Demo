@@ -1,0 +1,17 @@
+---
+zuul:
+  ignored-patterns: /the/path/to/listen/to/ignored/**
+  routes:
+    path: # This can be named whatever makes sense to you
+      path: /the/path/to/listen/to/*
+      sensitiveHeaders: Cookie,Set-Cookie,Authorization
+      url: ${wiremock.host}/the/path/to/proxy/to
+
+wiremock:
+  host: localhost:8181
+
+api:
+  token: token-value
+
+response:
+  header-name: X-Request-Id

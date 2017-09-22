@@ -1,19 +1,21 @@
-package com.cdk.cs.iam.filters.pre;
+package com.cdk.cs.iam.filters;
 
 import com.cdk.cs.iam.service.RequestSwatterService;
 import com.netflix.zuul.ZuulFilter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 @Service
-public class ExclusivePreFilter extends ZuulFilter {
+@Slf4j
+public class PreFilter extends ZuulFilter {
 
     private RequestSwatterService requestSwatterService;
 
     @Autowired
-    public ExclusivePreFilter(RequestSwatterService requestSwatterService) {
+    public PreFilter(final RequestSwatterService requestSwatterService) {
         this.requestSwatterService = requestSwatterService;
     }
 
