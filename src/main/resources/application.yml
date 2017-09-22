@@ -12,7 +12,9 @@ wiremock:
   host: localhost:8181
 
 api:
-  token: token-value
+  token:
+    header: Api-Token
+    value: token-value
 
 response:
   header-name: X-Request-Id
