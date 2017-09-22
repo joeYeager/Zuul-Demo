@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.ROUTE_TYPE;
 
-@Ignore
 public class RouteFilterTest {
 
     private RouteFilter target;
