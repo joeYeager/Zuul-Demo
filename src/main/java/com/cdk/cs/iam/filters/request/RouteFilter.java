@@ -1,11 +1,15 @@
 package com.cdk.cs.iam.filters.request;
 
 import com.netflix.zuul.ZuulFilter;
+import org.springframework.stereotype.Service;
 
-public class RequestFilter extends ZuulFilter {
+import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.ROUTE_TYPE;
+
+@Service
+public class RouteFilter extends ZuulFilter {
     @Override
     public String filterType() {
-        return null;
+        return ROUTE_TYPE;
     }
 
     @Override

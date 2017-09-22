@@ -1,11 +1,15 @@
 package com.cdk.cs.iam.filters.post;
 
 import com.netflix.zuul.ZuulFilter;
+import org.springframework.stereotype.Service;
 
+import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.POST_TYPE;
+
+@Service
 public class PostFilter extends ZuulFilter {
     @Override
     public String filterType() {
-        return null;
+        return POST_TYPE;
     }
 
     @Override

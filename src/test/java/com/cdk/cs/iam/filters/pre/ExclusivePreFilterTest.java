@@ -1,17 +1,17 @@
-package com.cdk.cs.iam.filters.request;
+package com.cdk.cs.iam.filters.pre;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RequestFilterTest {
+public class ExclusivePreFilterTest {
 
-    private RequestFilter target;
+    private ExclusivePreFilter target;
 
     @Before
     public void setUp() throws Exception {
-        target = new RequestFilter();
+        target = new ExclusivePreFilter();
     }
 
     @Test
