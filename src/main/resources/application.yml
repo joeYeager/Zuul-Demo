@@ -5,7 +5,8 @@ zuul:
     path: # This can be named whatever makes sense to you
       path: /the/path/to/listen/to/*
       sensitiveHeaders: Cookie,Set-Cookie,Authorization
-      url: ${wiremock.host}/the/path/to/proxy/to
+      url: https://google.com
+#      url: ${wiremock.host}/the/path/to/proxy/to
 
 wiremock:
   host: localhost:8181
@@ -15,3 +16,12 @@ api:
 
 response:
   header-name: X-Request-Id
+
+pre-filter:
+  enabled: true
+
+post-filter:
+  enabled: false
+
+route-filter:
+  enabled: false

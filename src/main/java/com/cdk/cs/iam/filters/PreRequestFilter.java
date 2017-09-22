@@ -4,24 +4,25 @@ import com.cdk.cs.iam.service.RequestSwatterService;
 import com.netflix.zuul.ZuulFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
-@Service
 @Slf4j
-public class PreFilter extends ZuulFilter {
+@Service
+@ConditionalOnProperty(prefix = "pre-filter", name = "enabled")
+public class PreRequestFilter extends ZuulFilter {
 
     private RequestSwatterService requestSwatterService;
 
     @Autowired
-    public PreFilter(final RequestSwatterService requestSwatterService) {
+    public PreRequestFilter(final RequestSwatterService requestSwatterService) {
         this.requestSwatterService = requestSwatterService;
     }
 
     @Override
     public String filterType() {
-        return PRE_TYPE;
+        return null;
     }
 
     @Override

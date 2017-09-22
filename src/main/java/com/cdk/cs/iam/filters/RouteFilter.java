@@ -2,16 +2,16 @@ package com.cdk.cs.iam.filters;
 
 import com.netflix.zuul.ZuulFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.ROUTE_TYPE;
-
-@Service
 @Slf4j
+@Service
+@ConditionalOnProperty(prefix = "route-filter", name = "enabled")
 public class RouteFilter extends ZuulFilter {
     @Override
     public String filterType() {
-        return ROUTE_TYPE;
+        return null;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class RouteFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return false;
+        return true;
     }
 
     @Override

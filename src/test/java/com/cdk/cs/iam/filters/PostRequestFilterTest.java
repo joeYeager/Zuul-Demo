@@ -7,26 +7,26 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.ROUTE_TYPE;
+import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.POST_TYPE;
 
 @Ignore
-public class RouteFilterTest {
+public class PostRequestFilterTest {
 
-    private RouteFilter target;
+    private PostRequestFilter target;
 
     @Before
     public void setUp() throws Exception {
-        target = new RouteFilter();
+        target = new PostRequestFilter();
     }
 
     @Test
-    public void whenFilterTypeIsCalledItShouldReturnRouteType() throws Exception {
-        assertEquals(ROUTE_TYPE, target.filterType());
+    public void whenFilterTypeIsCalledItShouldReturnPostType() throws Exception {
+        assertEquals(POST_TYPE, target.filterType());
     }
 
     @Test
     public void testFilterOrder() throws Exception {
-        assertEquals(FilterConstants.SHOULD_FILTER_BEFORE_HOST_ROUTING_OCCURS, target.filterOrder());
+        assertEquals(FilterConstants.SHOULD_FILTER_BEFORE_RESPONSE_IS_FORWARDED, target.filterOrder());
     }
 
     @Test

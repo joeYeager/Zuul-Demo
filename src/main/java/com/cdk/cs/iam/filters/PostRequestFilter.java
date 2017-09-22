@@ -2,16 +2,16 @@ package com.cdk.cs.iam.filters;
 
 import com.netflix.zuul.ZuulFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.POST_TYPE;
-
-@Service
 @Slf4j
-public class PostFilter extends ZuulFilter {
+@Service
+@ConditionalOnProperty(prefix = "post-filter", name = "enabled")
+public class PostRequestFilter extends ZuulFilter {
     @Override
     public String filterType() {
-        return POST_TYPE;
+        return null;
     }
 
     @Override
