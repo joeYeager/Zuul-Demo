@@ -1,11 +1,16 @@
 package com.cdk.cs.iam.filters;
 
+import com.cdk.cs.iam.contants.FilterConstants;
 import com.cdk.cs.iam.service.RequestSwatterService;
 import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 
 @Slf4j
@@ -22,21 +27,24 @@ public class SwatterPreRequestFilter extends ZuulFilter {
 
     @Override
     public String filterType() {
-        return null;
+        return PRE_TYPE;
     }
 
     @Override
     public int filterOrder() {
-        return 0;
+        return FilterConstants.SHOULD_BE_THE_FIRST_PRE_FILTER_TO_RUN;
     }
 
     @Override
     public boolean shouldFilter() {
-        return false;
+        RequestContext currentContext = RequestContext.getCurrentContext();
+        String requestURI = currentContext.getRequest().getRequestURI();
+        return requestURI.toLowerCase().contains("user");
     }
 
     @Override
     public Object run() {
+        requestSwatterService.swat(RequestContext.getCurrentContext(), HttpStatus.I_AM_A_TEAPOT, "Get Swatted");
         return null;
     }
 }

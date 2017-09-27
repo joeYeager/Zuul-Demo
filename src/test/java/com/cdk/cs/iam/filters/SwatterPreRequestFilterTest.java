@@ -45,7 +45,7 @@ public class SwatterPreRequestFilterTest {
 
     @Test
     public void testFilterOrder() throws Exception {
-        assertEquals(FilterConstants.SHOULD_FILTER_BEFORE_REQUEST_IS_FORWARDED, target.filterOrder());
+        assertEquals(FilterConstants.SHOULD_BE_THE_FIRST_PRE_FILTER_TO_RUN, target.filterOrder());
     }
 
     @Test
