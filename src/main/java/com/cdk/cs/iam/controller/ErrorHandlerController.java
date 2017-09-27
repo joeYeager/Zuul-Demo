@@ -17,10 +17,10 @@ public class ErrorHandlerController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return ErrorConstants.ZUUL_ERROR_ENDPOINT;
+        return ErrorConstants.ERROR_ENDPOINT;
     }
 
-    @RequestMapping(value = ErrorConstants.ZUUL_ERROR_ENDPOINT, produces = "application/json")
+    @RequestMapping(value = ErrorConstants.ERROR_ENDPOINT, produces = "application/json")
     public ResponseEntity error(final HttpServletRequest request) {
         final int status = getErrorStatus(request);
         final String errorMessage = getErrorMessage(status);

@@ -28,7 +28,7 @@ public class ErrorHandlerControllerTest {
 
     @Test
     public void getErrorPath() throws Exception {
-        assertEquals(ErrorConstants.ZUUL_ERROR_ENDPOINT, target.getErrorPath());
+        assertEquals(ErrorConstants.ERROR_ENDPOINT, target.getErrorPath());
     }
 
     @Test

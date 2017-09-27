@@ -1,41 +1,25 @@
 package com.cdk.cs.iam.filters;
 
 import com.cdk.cs.iam.contants.FilterConstants;
-import com.cdk.cs.iam.service.RequestSwatterService;
+import com.cdk.cs.iam.contants.HeaderConstants;
 import com.netflix.zuul.context.RequestContext;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 public class PreRequestFilterTest {
 
-    @InjectMocks
     private PreRequestFilter target;
-
-    @Mock
-    private RequestSwatterService requestSwatterService;
-
-    private RequestContext requestContext;
-    private HttpServletRequest request;
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        requestContext = mock(RequestContext.class);
-        request = mock(HttpServletRequest.class);
-
-        when(requestContext.getRequest()).thenReturn(request);
+        target = new PreRequestFilter();
     }
 
     @Test
@@ -55,26 +39,25 @@ public class PreRequestFilterTest {
 
     @Test
     public void whenRunIsCalledItShouldAddAnApiTokenHeader() throws Exception {
+        RequestContext requestContext = mock(RequestContext.class);
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
-        verify(requestContext).addZuulRequestHeader("Api-Token", "token-value");
+        verify(requestContext).addZuulRequestHeader(HeaderConstants.API_TOKEN_HEADER, "token-value");
     }
 
     @Test
-    public void whenRunIsCalledItShouldSwatRequestsContainingTheStringUser() throws Exception {
-        when(request.getRequestURI()).thenReturn("user");
+    public void whenRunIsCalledItShouldAddRequestIdHeader() throws Exception {
+        RequestContext requestContext = mock(RequestContext.class);
         RequestContext.testSetCurrentContext(requestContext);
-
         target.run();
-        verify(requestSwatterService).swat(requestContext, HttpStatus.I_AM_A_TEAPOT, "Get Swatted");
+        verify(requestContext).addZuulRequestHeader(eq(HeaderConstants.REQUEST_ID_HEADER), anyString());
     }
 
     @Test
-    public void whenRunIsCalledItShouldNotSwatRequestsNotContainingTheStringUser() throws Exception {
-        when(request.getRequestURI()).thenReturn("aFineUri");
+    public void whenRunIsCalledItShouldAddTimestampHeader() throws Exception {
+        RequestContext requestContext = mock(RequestContext.class);
         RequestContext.testSetCurrentContext(requestContext);
-
         target.run();
-        verify(requestSwatterService).swat(requestContext, HttpStatus.I_AM_A_TEAPOT, "Get Swatted");
+        verify(requestContext).addZuulRequestHeader(eq(HeaderConstants.TIMESTAMP_HEADER), anyString());
     }
 }

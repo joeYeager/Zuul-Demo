@@ -11,14 +11,6 @@ zuul:
 wiremock:
   host: localhost:8181
 
-api:
-  token:
-    header: Api-Token
-    value: token-value
-
-response:
-  header-name: X-Request-Id
-
 pre-filter:
   enabled: true
 
