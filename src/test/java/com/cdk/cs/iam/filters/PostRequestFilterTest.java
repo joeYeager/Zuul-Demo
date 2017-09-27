@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.POST_TYPE;
@@ -47,7 +48,17 @@ public class PostRequestFilterTest {
     }
 
     @Test
+    public void whenRunIsCalledAddTimestampHeaderIsNullDoNotSetResponseTimeHeader() throws Exception {
+        when(response.getHeader(HeaderConstants.TIMESTAMP_HEADER)).thenReturn(null);
+        RequestContext.testSetCurrentContext(requestContext);
+        target.run();
+        verify(response, times(0)).setHeader(eq(HeaderConstants.RESPONSE_TIME), anyString());
+    }
+
+    @Test
     public void whenRunIsCalledItShouldAddTheTotalResponseTimeHeader() throws Exception {
+        String mockTimeStampHeader = String.valueOf(System.currentTimeMillis());
+        when(response.getHeader(HeaderConstants.TIMESTAMP_HEADER)).thenReturn(mockTimeStampHeader);
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
         verify(response).setHeader(eq(HeaderConstants.RESPONSE_TIME), anyString());

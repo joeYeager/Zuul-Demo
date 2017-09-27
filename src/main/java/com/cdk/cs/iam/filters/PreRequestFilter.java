@@ -35,8 +35,9 @@ public class PreRequestFilter extends ZuulFilter {
 
     @Override
     public Object run() {
+        String epoch = String.valueOf(System.currentTimeMillis());
         RequestContext currentContext = RequestContext.getCurrentContext();
-        currentContext.addZuulRequestHeader(HeaderConstants.TIMESTAMP_HEADER, new Date().toString());
+        currentContext.addZuulRequestHeader(HeaderConstants.TIMESTAMP_HEADER, epoch);
         currentContext.addZuulRequestHeader(HeaderConstants.API_TOKEN_HEADER, "token-value");
         currentContext.addZuulRequestHeader(HeaderConstants.REQUEST_ID_HEADER, UUID.randomUUID().toString());
         return null;
