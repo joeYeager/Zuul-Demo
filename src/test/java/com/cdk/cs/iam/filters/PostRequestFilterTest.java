@@ -1,6 +1,7 @@
 package com.cdk.cs.iam.filters;
 
 import com.cdk.cs.iam.contants.FilterConstants;
+import com.cdk.cs.iam.contants.HeaderConstants;
 import com.netflix.zuul.context.RequestContext;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,9 +47,9 @@ public class PostRequestFilterTest {
     }
 
     @Test
-    public void whenRunIsCalledItShouldAddTheRequestIdHeaderToTheResponse() throws Exception {
+    public void whenRunIsCalledItShouldAddTheTotalResponseTimeHeader() throws Exception {
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
-        verify(response).setHeader(eq("X-Request-Id"), anyString());
+        verify(response).setHeader(eq(HeaderConstants.RESPONSE_TIME), anyString());
     }
 }
