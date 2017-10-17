@@ -23,7 +23,7 @@ public class ErrorHandlerController implements ErrorController {
     @RequestMapping(value = ErrorConstants.ERROR_ENDPOINT, produces = "application/json")
     public ResponseEntity error(final HttpServletRequest request) {
         final int status = getErrorStatus(request);
-        final String errorMessage = getErrorMessage(status);
+        final String errorMessage = HttpStatus.valueOf(status).getReasonPhrase();
 
         HashMap<String, String> error = new HashMap<>();
         error.put("message", errorMessage);
@@ -37,12 +37,5 @@ public class ErrorHandlerController implements ErrorController {
             return statusCode;
         }
         return HttpStatus.INTERNAL_SERVER_ERROR.value();
-    }
-
-    private String getErrorMessage(final int status) {
-        if (status == HttpStatus.NOT_FOUND.value()) {
-            return ErrorConstants.NOT_FOUND_MESSAGE;
-        }
-        return ErrorConstants.INTERNAL_SERVER_ERROR_MESSAGE;
     }
 }

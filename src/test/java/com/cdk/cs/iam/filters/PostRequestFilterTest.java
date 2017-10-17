@@ -49,7 +49,8 @@ public class PostRequestFilterTest {
 
     @Test
     public void whenRunIsCalledAddTimestampHeaderIsNullDoNotSetResponseTimeHeader() throws Exception {
-        when(response.getHeader(HeaderConstants.TIMESTAMP_HEADER)).thenReturn(null);
+        when(requestContext.get(HeaderConstants.TIMESTAMP_HEADER)).thenReturn(System.currentTimeMillis());
+        when(requestContext.get(HeaderConstants.REQUEST_ID_HEADER)).thenReturn("");
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
         verify(response, times(0)).setHeader(eq(HeaderConstants.RESPONSE_TIME), anyString());
@@ -57,10 +58,10 @@ public class PostRequestFilterTest {
 
     @Test
     public void whenRunIsCalledItShouldAddTheTotalResponseTimeHeader() throws Exception {
-        String mockTimeStampHeader = String.valueOf(System.currentTimeMillis());
-        when(response.getHeader(HeaderConstants.TIMESTAMP_HEADER)).thenReturn(mockTimeStampHeader);
+        when(requestContext.get(HeaderConstants.TIMESTAMP_HEADER)).thenReturn(System.currentTimeMillis());
+        when(requestContext.get(HeaderConstants.REQUEST_ID_HEADER)).thenReturn("");
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
-        verify(response).setHeader(eq(HeaderConstants.RESPONSE_TIME), anyString());
+        verify(requestContext).addZuulResponseHeader(eq(HeaderConstants.RESPONSE_TIME), anyString());
     }
 }

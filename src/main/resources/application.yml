@@ -1,21 +1,17 @@
 ---
 zuul:
-  ignored-patterns: /the/path/to/listen/to/ignored/**
   routes:
-    path: # This can be named whatever makes sense to you
-      path: /the/path/to/listen/to/*
-      sensitiveHeaders: Cookie,Set-Cookie,Authorization
-      url: https://google.com
-#      url: ${wiremock.host}/the/path/to/proxy/to
-
-wiremock:
-  host: localhost:8181
+    demo:
+      path: /demo/**
+      url: http://localhost:8000/
 
 pre-filter:
   enabled: true
 
 post-filter:
-  enabled: false
+  enabled: true
 
 route-filter:
-  enabled: false
+  enabled: true
+
+routing-percentage: 0.2f

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
@@ -35,7 +36,6 @@ public class SwatterPreRequestFilterTest {
         requestContext = mock(RequestContext.class);
         request = mock(HttpServletRequest.class);
 
-        when(requestContext.getRequest()).thenReturn(request);
     }
 
     @Test
@@ -49,19 +49,25 @@ public class SwatterPreRequestFilterTest {
     }
 
     @Test
-    public void whenRunIsCalledItShouldSwatRequestsContainingTheStringUser() throws Exception {
-        when(request.getRequestURI()).thenReturn("user");
+    public void whenShouldFilterIsCalledItShouldFilterRequestsWithSwattedInTheUri() throws Exception {
+        when(request.getRequestURI()).thenReturn("swatted");
+        when(requestContext.getRequest()).thenReturn(request);
         RequestContext.testSetCurrentContext(requestContext);
 
-        target.run();
-        verify(requestSwatterService).swat(requestContext, HttpStatus.I_AM_A_TEAPOT, "Get Swatted");
+        assertEquals(true, target.shouldFilter());
     }
 
     @Test
-    public void whenRunIsCalledItShouldNotSwatRequestsNotContainingTheStringUser() throws Exception {
+    public void whenShouldFilterIsCalledItShouldNotFilterRequestsWithoutSwattedInTheUri() throws Exception {
         when(request.getRequestURI()).thenReturn("aFineUri");
+        when(requestContext.getRequest()).thenReturn(request);
         RequestContext.testSetCurrentContext(requestContext);
+        assertEquals(false, target.shouldFilter());
+    }
 
+    @Test
+    public void whenRunIsCalledItShouldCallTheSwatterService() throws Exception {
+        RequestContext.testSetCurrentContext(requestContext);
         target.run();
         verify(requestSwatterService).swat(requestContext, HttpStatus.I_AM_A_TEAPOT, "Get Swatted");
     }

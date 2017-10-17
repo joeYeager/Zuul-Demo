@@ -58,6 +58,6 @@ public class PreRequestFilterTest {
         RequestContext requestContext = mock(RequestContext.class);
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
-        verify(requestContext).addZuulRequestHeader(eq(HeaderConstants.TIMESTAMP_HEADER), anyString());
+        verify(requestContext).set(eq(HeaderConstants.TIMESTAMP_HEADER), anyString());
     }
 }

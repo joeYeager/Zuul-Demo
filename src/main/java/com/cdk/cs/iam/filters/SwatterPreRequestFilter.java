@@ -39,7 +39,7 @@ public class SwatterPreRequestFilter extends ZuulFilter {
     public boolean shouldFilter() {
         RequestContext currentContext = RequestContext.getCurrentContext();
         String requestURI = currentContext.getRequest().getRequestURI();
-        return requestURI.toLowerCase().contains("user");
+        return requestURI.toLowerCase().contains("swatted");
     }
 
     @Override

@@ -52,16 +52,16 @@ public class ErrorHandlerControllerTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getAttribute(anyString())).thenReturn(HttpStatus.NOT_FOUND.value());
         ResponseEntity actual = target.error(request);
-        expected.put("message", ErrorConstants.NOT_FOUND_MESSAGE);
+        expected.put("message", HttpStatus.NOT_FOUND.getReasonPhrase());
         assertEquals(expected, actual.getBody());
     }
 
     @Test
     public void whenNotFoundStatusIsNotReturnedTheMessageShouldBeIntenalServerError() throws Exception {
         HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getAttribute(anyString())).thenReturn(HttpStatus.I_AM_A_TEAPOT.value());
+        when(request.getAttribute(anyString())).thenReturn(HttpStatus.INTERNAL_SERVER_ERROR.value());
         ResponseEntity actual = target.error(request);
-        expected.put("message", ErrorConstants.INTERNAL_SERVER_ERROR_MESSAGE);
+        expected.put("message", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         assertEquals(expected, actual.getBody());
     }
 }

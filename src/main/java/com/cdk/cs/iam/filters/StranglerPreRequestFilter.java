@@ -5,17 +5,23 @@ import com.cdk.cs.iam.contants.HeaderConstants;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.Random;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 @Slf4j
 @Service
-@ConditionalOnProperty(prefix = "pre-filter", name = "enabled")
-public class PreRequestFilter extends ZuulFilter {
+@ConditionalOnProperty(prefix = "route-filter", name = "enabled")
+public class StranglerPreRequestFilter extends ZuulFilter {
+
+    private Random random = new Random();
+
+    @Value("${routing-percentage}")
+    private float routingPercentage;
 
     @Override
     public String filterType() {
@@ -29,23 +35,12 @@ public class PreRequestFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return FilterConstants.SHOULD_FILTER_ALL_TRAFFIC;
+        return random.nextFloat() < routingPercentage;
     }
 
     @Override
     public Object run() {
-        Long epoch = System.currentTimeMillis();
-        String requestId = UUID.randomUUID().toString();
-
-        log.info("Proxying request with request id: {}", requestId);
-        RequestContext currentContext = RequestContext.getCurrentContext();
-
-        currentContext.set(HeaderConstants.TIMESTAMP_HEADER, epoch);
-        currentContext.set(HeaderConstants.REQUEST_ID_HEADER, requestId);
-
-        currentContext.addZuulRequestHeader(HeaderConstants.API_TOKEN_HEADER, "token-value");
-        currentContext.addZuulRequestHeader(HeaderConstants.REQUEST_ID_HEADER, requestId);
-
+        RequestContext.getCurrentContext().set(HeaderConstants.ROUTING_HEADER, true);
         return null;
     }
 }
