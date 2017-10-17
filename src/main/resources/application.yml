@@ -9,9 +9,9 @@ pre-filter:
   enabled: true
 
 post-filter:
-  enabled: true
+  enabled: false
 
 route-filter:
-  enabled: true
+  enabled: false
 
 routing-percentage: 0.2f
