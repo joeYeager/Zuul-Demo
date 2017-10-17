@@ -6,5 +6,4 @@ public class HeaderConstants {
     public static final String REQUEST_ID_HEADER= "X-Request-Id";
     public static final String TIMESTAMP_HEADER = "X-Request-Received-Timestamp";
     public static final String RESPONSE_TIME = "X-Zuul-Total-Response-Time";
-    public static final String ROUTING_HEADER = "X-Request-Routing";
 }

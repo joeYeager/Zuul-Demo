@@ -1,23 +1,26 @@
 package com.cdk.cs.iam.filters;
 
 import com.cdk.cs.iam.contants.FilterConstants;
-import com.cdk.cs.iam.contants.HeaderConstants;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.ROUTE_TYPE;
 
-@Slf4j
 @Service
 @ConditionalOnProperty(prefix = "route-filter", name = "enabled")
-public class RouteFilter extends ZuulFilter {
+public class StranglerRouteFilter extends ZuulFilter {
 
+    private Random random = new Random();
+
+    @Value("${routing-percentage}")
+    private float routingPercentage;
 
     @Override
     public String filterType() {
@@ -31,7 +34,7 @@ public class RouteFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return RequestContext.getCurrentContext().get(HeaderConstants.ROUTING_HEADER) != null;
+        return random.nextFloat() < routingPercentage;
     }
 
     @Override
