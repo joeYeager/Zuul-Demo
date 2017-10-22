@@ -42,7 +42,11 @@ public class PostRequestFilter extends ZuulFilter {
 
         currentContext.addZuulResponseHeader(HeaderConstants.RESPONSE_TIME, String.valueOf(responseTime));
 
-        log.info("Proxying of request with id: {}, took {}ms.", requestId, String.valueOf(responseTime));
+        log.info(
+                "Proxying of request with id: {} took {}ms.",
+                requestId,
+                String.valueOf(responseTime)
+        );
 
         return null;
     }

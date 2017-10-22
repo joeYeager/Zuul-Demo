@@ -37,7 +37,6 @@ public class PreRequestFilter extends ZuulFilter {
         Long epoch = System.currentTimeMillis();
         String requestId = UUID.randomUUID().toString();
 
-        log.info("Proxying request with request id: {}", requestId);
         RequestContext currentContext = RequestContext.getCurrentContext();
 
         currentContext.set(HeaderConstants.TIMESTAMP_HEADER, epoch);
@@ -45,6 +44,12 @@ public class PreRequestFilter extends ZuulFilter {
 
         currentContext.addZuulRequestHeader(HeaderConstants.API_TOKEN_HEADER, "token-value");
         currentContext.addZuulRequestHeader(HeaderConstants.REQUEST_ID_HEADER, requestId);
+
+        log.info(
+                "Proxying request with request id: {} to URI: {}",
+                requestId,
+                currentContext.getRequest().getRequestURI()
+        );
 
         return null;
     }

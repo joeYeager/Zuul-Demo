@@ -5,8 +5,12 @@ zuul:
       path: /demo/**
       url: http://localhost:8000/
 
+# Demo specific - not related to Zuul
+error--throw-filter:
+  enabled: false
+
 pre-filter:
-  enabled: true
+  enabled: false
 
 post-filter:
   enabled: false

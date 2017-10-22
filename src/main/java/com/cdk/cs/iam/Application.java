@@ -2,6 +2,7 @@ package com.cdk.cs.iam;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,6 @@ import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
 @EnableZuulProxy
-@EnableFeignClients
 public class Application {
     public static void main(final String[] args) {
         SpringApplication.run(Application.class, args);

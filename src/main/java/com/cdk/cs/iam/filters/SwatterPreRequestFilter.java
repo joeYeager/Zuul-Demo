@@ -4,6 +4,7 @@ import com.cdk.cs.iam.contants.FilterConstants;
 import com.cdk.cs.iam.service.RequestSwatterService;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 
 
 @Service
+@Slf4j
 @ConditionalOnProperty(prefix = "pre-filter", name = "enabled")
 public class SwatterPreRequestFilter extends ZuulFilter {
 

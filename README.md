@@ -11,9 +11,25 @@ and how to leverage them to perform actions during the proxying process.
 2) Maven
 
 ## What is Zuul?
-Zuul is a JVM based router and server side load balancer by Netflix.  It is a framework that allows you to create Filters
-and specify at which point in the request routing and under what conditions to perform actions. 
- 
+Zuul is a JVM based router and server side load balancer by Netflix.  It easily allows you to extend it by creating and 
+registering Filters.  These filters hold the logic on when they should be applied, under what conditions they should be applied,
+and what actions they should run.  These can be set to run in several points of the routing process. 
+
+### What can Zuul do?
+
+Netflix uses Zuul for the following:
+
+- Authentication
+- Insights
+- Stress Testing
+- Canary Testing
+- Dynamic Routing
+- Service Migration
+- Load Shedding
+- Security
+- Static Response handling
+- Active/Active traffic management
+
 ## Filters
 Filters are composed of 4 key properties.
 
@@ -37,4 +53,5 @@ be ran.
 #### Action
 What you would like to have performed if the conditions in the run criteria are true.
 
-![Zuul Life Cycle](./zuul-life-cycle.png)
+## Zuul Lifecycle
+![Zuul Lifecycle](./zuul-life-cycle.png)
