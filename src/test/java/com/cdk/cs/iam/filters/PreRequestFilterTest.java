@@ -6,20 +6,27 @@ import com.netflix.zuul.context.RequestContext;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 public class PreRequestFilterTest {
 
     private PreRequestFilter target;
 
+    private RequestContext requestContext;
+
     @Before
     public void setUp() throws Exception {
         target = new PreRequestFilter();
+        requestContext = mock(RequestContext.class);
+        when(requestContext.getRequest()).thenReturn(mock(HttpServletRequest.class));
     }
 
     @Test
@@ -39,7 +46,6 @@ public class PreRequestFilterTest {
 
     @Test
     public void whenRunIsCalledItShouldAddAnApiTokenHeader() throws Exception {
-        RequestContext requestContext = mock(RequestContext.class);
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
         verify(requestContext).addZuulRequestHeader(HeaderConstants.API_TOKEN_HEADER, "token-value");
@@ -47,7 +53,6 @@ public class PreRequestFilterTest {
 
     @Test
     public void whenRunIsCalledItShouldAddRequestIdHeader() throws Exception {
-        RequestContext requestContext = mock(RequestContext.class);
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
         verify(requestContext).addZuulRequestHeader(eq(HeaderConstants.REQUEST_ID_HEADER), anyString());
@@ -55,7 +60,6 @@ public class PreRequestFilterTest {
 
     @Test
     public void whenRunIsCalledItShouldAddTimestampHeader() throws Exception {
-        RequestContext requestContext = mock(RequestContext.class);
         RequestContext.testSetCurrentContext(requestContext);
         target.run();
         verify(requestContext).set(eq(HeaderConstants.TIMESTAMP_HEADER), anyString());
