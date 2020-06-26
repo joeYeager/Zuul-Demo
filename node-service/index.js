@@ -1,4 +1,6 @@
 var app = require('express')();
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 app.get('/new-service', function(request, response) {
   response.send({
